@@ -1,11 +1,10 @@
+using BubberDinner.Domain.Entities;
+
 namespace BubbberDinner.Application.Services.Authenticaiton
 {
     public record AuthenticationResult
     (
-        Guid Id,
-        string FirstName,
-        string LastName,
-        string Email,
+        User user,
         string Token
     );
 }

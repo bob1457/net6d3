@@ -24,10 +24,11 @@ public class AuthenticaitonController: ControllerBase
             request.Email,
             request.Password);
         
-        var registerResponse = new AuthenticationResponse(registerResult.Id,
-            registerResult.FirstName,
-            registerResult.LastName,
-            registerResult.Email,
+        var registerResponse = new AuthenticationResponse(
+            registerResult.user.Id,
+            registerResult.user.FirstName,
+            registerResult.user.LastName,
+            registerResult.user.Email,
             registerResult.Token);
 
         return Ok(registerResponse);
@@ -40,10 +41,11 @@ public class AuthenticaitonController: ControllerBase
             request.Email,
             request.Password);
         
-        var loginResponse = new AuthenticationResponse(loginResult.Id,
-            loginResult.FirstName,
-            loginResult.LastName,
-            loginResult.Email,
+        var loginResponse = new AuthenticationResponse(
+            loginResult.user.Id,
+            loginResult.user.FirstName,
+            loginResult.user.LastName,
+            loginResult.user.Email,
             loginResult.Token);
 
         
