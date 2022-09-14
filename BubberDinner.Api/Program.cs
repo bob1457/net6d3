@@ -1,6 +1,10 @@
+using BubbberDinner.Api.Errors;
+using BubbberDinner.Api.Filters;
 using BubbberDinner.Application;
 using BubbberDinner.Application.Services.Authenticaiton;
 using BubbberDinner.Infrastructure;
+using BubberDineer.Api.Middleware;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -9,8 +13,15 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services
         .AddApplication()
         .AddInfrastructure(builder.Configuration);
-        
-    builder.Services.AddControllers();
+
+    builder.Services.AddControllers();  
+
+    // builder.Services.AddControllers(options => // Using errorhandler filter
+    // {
+    //     options.Filters.Add<ErrorHandlerFilter>();
+    // });
+
+    builder.Services.AddSingleton<ProblemDetailsFactory, BubberDinnerProblemDetailsFactory>();
 }
 
 
@@ -20,18 +31,26 @@ var builder = WebApplication.CreateBuilder(args);
 // builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+{
+    // Configure the HTTP request pipeline.
 
-// Configure the HTTP request pipeline.
+    // app.UseMiddleware<ErrorHandler>(); // user errorhandler middleware
+
+    app.UseExceptionHandler("/error"); // use built-iin error handler route
+    
+    app.UseHttpsRedirection();
+
+    // app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
+}
+
 // if (app.Environment.IsDevelopment())
 // {
 //     app.UseSwagger();
 //     app.UseSwaggerUI();
 // }
 
-app.UseHttpsRedirection();
 
-// app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
