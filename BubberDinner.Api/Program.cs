@@ -1,4 +1,5 @@
-using BubbberDinner.Api.Errors;
+using System.Runtime.CompilerServices;
+using BubbberDinner.Api.Common;
 using BubbberDinner.Api.Filters;
 using BubbberDinner.Application;
 using BubbberDinner.Application.Services.Authenticaiton;

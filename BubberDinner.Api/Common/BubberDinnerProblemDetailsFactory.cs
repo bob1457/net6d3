@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 
-namespace BubbberDinner.Api.Errors;
+namespace BubbberDinner.Api.Common;
 
 public class BubberDinnerProblemDetailsFactory : ProblemDetailsFactory
 {
@@ -65,7 +65,7 @@ public class BubberDinnerProblemDetailsFactory : ProblemDetailsFactory
             problemDetails.Extensions["traceId"] = traceId;
         }
 
-        problemDetails.Extensions.Add("customProperty", "customValue");
+        // problemDetails.Extensions.Add("customProperty", "customValue");
         
     }
 }

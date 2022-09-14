@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using BubbberDinner.Application.Common.interfaces.Authenticaiton;
 using BubbberDinner.Application.Common.interfaces.Persistence;
+using BubberDineer.Application.Common.Error;
 using BubberDinner.Domain.Entities;
 
 namespace BubbberDinner.Application.Services.Authenticaiton;
@@ -40,7 +41,8 @@ public class AuthenticationService : IAuthenticationService
     {
         if(_userRepository.GetUserByEmail(email) is not null)
         {
-            throw  new Exception("User already exists");
+            // throw  new Exception("User already exists");
+            throw new InvalidOperationException();
         }
 
         var user = new User
