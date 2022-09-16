@@ -2,7 +2,9 @@ using System.Security.Cryptography;
 using BubbberDinner.Application.Common.interfaces.Authenticaiton;
 using BubbberDinner.Application.Common.interfaces.Persistence;
 using BubberDineer.Application.Common.Error;
+using BubberDinner.Domain.Common.Errors;
 using BubberDinner.Domain.Entities;
+using ErrorOr;
 
 namespace BubbberDinner.Application.Services.Authenticaiton;
 
@@ -17,16 +19,18 @@ public class AuthenticationService : IAuthenticationService
         _userRepository = userRepository;
     }
 
-    public AuthenticationResult Login(string email, string password)
+    public ErrorOr<AuthenticationResult> Login(string email, string password)
     {
         if(_userRepository.GetUserByEmail(email) is not User user)
         {
-            throw  new Exception("Login failed, try it again!");
+            // throw  new Exception("Login failed, try it again!");
+            return Errors.Authenticaiton.InvalidaCredential;
         }
 
         if(user.Password != password) 
         {
-            throw  new Exception("Login failed");
+            // throw  new Exception("Login failed");
+            return Errors.Authenticaiton.InvalidaCredential;
         }
 
         var token = _jwtTokenGenerator.GenerateToken(user);
@@ -37,12 +41,13 @@ public class AuthenticationService : IAuthenticationService
         );
     }
 
-    public AuthenticationResult Register(string firstName, string lastName, string email, string password)
+    public ErrorOr<AuthenticationResult> Register(string firstName, string lastName, string email, string password)
     {
         if(_userRepository.GetUserByEmail(email) is not null)
         {
             // throw  new Exception("User already exists");
-            throw new InvalidOperationException();
+            // throw new InvalidOperationException();
+            return Errors.User.DuplicateEmail;
         }
 
         var user = new User
