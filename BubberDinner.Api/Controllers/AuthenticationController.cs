@@ -4,8 +4,7 @@ using BubbberDinner.Application.Services.Authenticaiton;
 using Microsoft.AspNetCore.Mvc;
 using ErrorOr;
 using BubbberDinner.Api.Controllers;
-
-
+using BubbberDinner.Application.Services.Authenticaiton.Common;
 
 namespace BubberDinner.Api.Controllers;
 
@@ -13,17 +12,21 @@ namespace BubberDinner.Api.Controllers;
 [Route("auth")]
 public class AuthenticaitonController : ApiController //ControllerBase 
 {
-    private readonly IAuthenticationService _authenticationService;
+    private readonly IAuthenticationCommandService _authenticationCommandService;
+    private readonly IAuthenticationQueryService _authenticationQueryService;
 
-    public AuthenticaitonController(IAuthenticationService authenticationService)
+    public AuthenticaitonController(
+        IAuthenticationCommandService authenticationCommandService,
+        IAuthenticationQueryService authenticationQueryService)
     {
-        _authenticationService = authenticationService;
+        _authenticationCommandService = authenticationCommandService;
+        _authenticationQueryService = authenticationQueryService;
     }
 
     [HttpPost("register")]
     public IActionResult Register(RegisterRequest request)
     {
-        ErrorOr<AuthenticationResult> registerResult = _authenticationService.Register(
+        ErrorOr<AuthenticationResult> registerResult = _authenticationCommandService.Register(
             request.FirstName,
             request.LastName,
             request.Email,
@@ -52,7 +55,7 @@ public class AuthenticaitonController : ApiController //ControllerBase
     [HttpPost("login")]
     public IActionResult Login(LoginRequest request)
     {
-        var loginResult = _authenticationService.Login(            
+        var loginResult = _authenticationQueryService.Login(            
         request.Email,
         request.Password);
 

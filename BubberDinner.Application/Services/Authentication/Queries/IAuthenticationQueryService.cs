@@ -1,11 +1,10 @@
+using BubbberDinner.Application.Services.Authenticaiton.Common;
 using ErrorOr;
 
 namespace BubbberDinner.Application.Services.Authenticaiton;
 
-public interface IAuthenticationService 
+public interface IAuthenticationQueryService 
 {
-    ErrorOr<AuthenticationResult> Register(string firstName, string lastName, string email, string password);
-
     ErrorOr<AuthenticationResult> Login(string email, string password);
 
 }
