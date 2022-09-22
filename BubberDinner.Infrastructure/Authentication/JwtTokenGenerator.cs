@@ -22,11 +22,11 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         _dateTimeProvider = dateTimeProvider;
         _jwtSettings = jwtSettings.Value;
     }
-
+// _jwtSettings.Secret
     public string GenerateToken(User user)
     {
         var signCredentials = new SigningCredentials(
-            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes("fdirnqwer q34r04u3rfasdf")),
             SecurityAlgorithms.HmacSha256);
 
         var claims = new[]

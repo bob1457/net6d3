@@ -3,8 +3,10 @@ using BubberDinner.Contracts.Authenticaiton;
 using BubbberDinner.Application.Services.Authenticaiton;
 using Microsoft.AspNetCore.Mvc;
 using ErrorOr;
+using MediatR;
 using BubbberDinner.Api.Controllers;
 using BubbberDinner.Application.Services.Authenticaiton.Common;
+using BubbberDinner.Application.Services.Authenticaiton.Commands.Register;
 
 namespace BubberDinner.Api.Controllers;
 
@@ -12,25 +14,27 @@ namespace BubberDinner.Api.Controllers;
 [Route("auth")]
 public class AuthenticaitonController : ApiController //ControllerBase 
 {
-    private readonly IAuthenticationCommandService _authenticationCommandService;
+    private readonly IMediator _mediatr;
+    // private readonly IAuthenticationCommandService _authenticationCommandService;
     private readonly IAuthenticationQueryService _authenticationQueryService;
 
     public AuthenticaitonController(
-        IAuthenticationCommandService authenticationCommandService,
-        IAuthenticationQueryService authenticationQueryService)
+        // IAuthenticationCommandService authenticationCommandService,
+        IAuthenticationQueryService authenticationQueryService,
+        IMediator mediatr)
     {
-        _authenticationCommandService = authenticationCommandService;
+        // _authenticationCommandService = authenticationCommandService;
         _authenticationQueryService = authenticationQueryService;
+        _mediatr = mediatr;
     }
 
     [HttpPost("register")]
-    public IActionResult Register(RegisterRequest request)
+    public async Task<IActionResult> Register(RegisterRequest request)
     {
-        ErrorOr<AuthenticationResult> registerResult = _authenticationCommandService.Register(
-            request.FirstName,
-            request.LastName,
-            request.Email,
-            request.Password);
+        var command = new RegisterCommand(request.FirstName, request.LastName, request.Email, request.Password);
+
+        ErrorOr<AuthenticationResult> registerResult = await _mediatr.Send(command);       
+        
 
         return registerResult.Match(
             registerResult => Ok(MapResult(registerResult)),
