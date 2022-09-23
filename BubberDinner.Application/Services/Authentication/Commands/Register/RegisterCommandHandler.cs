@@ -22,7 +22,9 @@ public class RegisterCommandHandler :
     }
     public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
     {
-        if(_userRepository.GetUserByEmail(command.email) is not null)
+        await Task.CompletedTask;
+        
+        if(_userRepository.GetUserByEmail(command.Email) is not null)
         {
             // throw  new Exception("User already exists");
             // throw new InvalidOperationException();
@@ -31,10 +33,10 @@ public class RegisterCommandHandler :
 
         var user = new User
         {
-            FirstName = command.firstName,
-            LastName = command.lastName,
-            Email = command.email,
-            Password = command.password
+            FirstName = command.FirstName,
+            LastName = command.LastName,
+            Email = command.Email,
+            Password = command.Password
         };
 
         _userRepository.Add(user);
