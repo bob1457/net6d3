@@ -1,12 +1,6 @@
-using System.Runtime.CompilerServices;
 using BubbberDinner.Api;
-using BubbberDinner.Api.Common;
-using BubbberDinner.Api.Filters;
 using BubbberDinner.Application;
-using BubbberDinner.Application.Services.Authenticaiton;
 using BubbberDinner.Infrastructure;
-using BubberDineer.Api.Middleware;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 {

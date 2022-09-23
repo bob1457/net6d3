@@ -8,26 +8,36 @@ using ErrorOr;
 using System.Threading.Tasks;
 using FluentValidation;
 
-public class ValidationBehaviors : IPipelineBehavior<RegisterCommand, ErrorOr<AuthenticationResult>>
+public class ValidationBehaviors<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : IRequest<TResponse>
+        where TResponse : IErrorOr
 {
-    private readonly IValidator<RegisterCommand> _validator;
+    private readonly IValidator<TRequest>? _validator;
 
-    public ValidationBehaviors(IValidator<RegisterCommand> validator)
+    public ValidationBehaviors(IValidator<TRequest>? validator = null)
     {
         _validator = validator;
     }
 
-    public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand request,
+    public async Task<TResponse> Handle(
+        TRequest request,
         CancellationToken cancellationToken,
-        RequestHandlerDelegate<ErrorOr<AuthenticationResult>> next)
+        RequestHandlerDelegate<TResponse> next)
     {
+       
+
+        if(_validator is null)
+        {
+            return await next();
+        }
+        
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if(validationResult.IsValid)
         {
             return await next();
         }
-
+        
         var errors = validationResult.Errors
                     .ConvertAll(validationFailure => Error.Validation(
                         validationFailure.PropertyName, 
@@ -38,6 +48,11 @@ public class ValidationBehaviors : IPipelineBehavior<RegisterCommand, ErrorOr<Au
 
         // After the handler code
 
-        return errors;
+        return (dynamic)errors;
     }
+
+    // public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+    // {
+    //     throw new NotImplementedException();
+    // }
 }

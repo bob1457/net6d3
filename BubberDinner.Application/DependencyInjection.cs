@@ -19,7 +19,8 @@ public static class DependencyInjection
         services.AddMediatR(Assembly.GetExecutingAssembly());
         // services.AddScoped<IAuthenticationCommandService, AuthenticationCommandService>();
         // services.AddScoped<IAuthenticationQueryService, AuthenticationQueryService>();
-        services.AddScoped<IPipelineBehavior<RegisterCommand, ErrorOr<AuthenticationResult>>, ValidationBehaviors>();
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviors<,>));
+        // services.AddScoped<IPipelineBehavior<RegisterCommand, ErrorOr<AuthenticationResult>>, ValidationBehaviors>();
         // services.AddScoped<IValidator<RegisterCommand>, RegisterCommandValidator>();
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
