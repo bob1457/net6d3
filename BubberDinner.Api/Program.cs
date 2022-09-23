@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using BubbberDinner.Api;
 using BubbberDinner.Api.Common;
 using BubbberDinner.Api.Filters;
 using BubbberDinner.Application;
@@ -13,16 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
     //
     builder.Services
         .AddApplication()
-        .AddInfrastructure(builder.Configuration);
+        .AddInfrastructure(builder.Configuration)
+        .AddPresentation();
 
-    builder.Services.AddControllers();  
-
-    // builder.Services.AddControllers(options => // Using errorhandler filter
-    // {
-    //     options.Filters.Add<ErrorHandlerFilter>();
-    // });
-
-    builder.Services.AddSingleton<ProblemDetailsFactory, BubberDinnerProblemDetailsFactory>();
+    
 }
 
 

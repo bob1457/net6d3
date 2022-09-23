@@ -7,6 +7,8 @@ using MediatR;
 using BubbberDinner.Api.Controllers;
 using BubbberDinner.Application.Services.Authenticaiton.Common;
 using BubbberDinner.Application.Services.Authenticaiton.Commands.Register;
+using BubbberDinner.Application.Services.Authenticaiton.Queries.Login;
+using MapsterMapper;
 
 namespace BubberDinner.Api.Controllers;
 
@@ -15,29 +17,33 @@ namespace BubberDinner.Api.Controllers;
 public class AuthenticaitonController : ApiController //ControllerBase 
 {
     private readonly IMediator _mediatr;
+    private readonly IMapper _mapper;
     // private readonly IAuthenticationCommandService _authenticationCommandService;
-    private readonly IAuthenticationQueryService _authenticationQueryService;
+    // private readonly IAuthenticationQueryService _authenticationQueryService;
 
     public AuthenticaitonController(
         // IAuthenticationCommandService authenticationCommandService,
-        IAuthenticationQueryService authenticationQueryService,
-        IMediator mediatr)
+        // IAuthenticationQueryService authenticationQueryService,
+        IMediator mediatr,
+        IMapper mapper)
     {
         // _authenticationCommandService = authenticationCommandService;
-        _authenticationQueryService = authenticationQueryService;
+        // _authenticationQueryService = authenticationQueryService;
         _mediatr = mediatr;
+        _mapper = mapper;
     }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterRequest request)
     {
-        var command = new RegisterCommand(request.FirstName, request.LastName, request.Email, request.Password);
+        var command = _mapper.Map<RegisterCommand>(request);
+        // new RegisterCommand(request.FirstName, request.LastName, request.Email, request.Password);
 
         ErrorOr<AuthenticationResult> registerResult = await _mediatr.Send(command);       
         
 
         return registerResult.Match(
-            registerResult => Ok(MapResult(registerResult)),
+            registerResult => Ok(_mapper.Map<AuthenticationResponse>(registerResult)),
             errors => Problem(errors)
         );
         
@@ -46,22 +52,26 @@ public class AuthenticaitonController : ApiController //ControllerBase
         // return Ok(registerResponse);
     }
 
-    private static AuthenticationResponse MapResult(AuthenticationResult registerResult)
-    {
-        return new AuthenticationResponse(
-                    registerResult.user.Id,
-                    registerResult.user.FirstName,
-                    registerResult.user.LastName,
-                    registerResult.user.Email,
-                    registerResult.Token);
-    }
+    // private static AuthenticationResponse MapResult(AuthenticationResult registerResult)
+    // {
+    //     return new AuthenticationResponse(
+    //                 registerResult.user.Id,
+    //                 registerResult.user.FirstName,
+    //                 registerResult.user.LastName,
+    //                 registerResult.user.Email,
+    //                 registerResult.Token);
+    // }
 
     [HttpPost("login")]
-    public IActionResult Login(LoginRequest request)
+    public async Task<IActionResult> Login(LoginRequest request)
     {
-        var loginResult = _authenticationQueryService.Login(            
-        request.Email,
-        request.Password);
+        // var loginResult = _authenticationQueryService.Login(            
+        // request.Email,
+        // request.Password);
+        var query = _mapper.Map<LoginQuery>(request);
+        // new LoginQuery(request.email, request.password);
+
+        var loginResult = await _mediatr.Send(query);
 
         if(loginResult.IsError && loginResult.FirstError == Domain.Common.Errors.Errors.Authenticaiton.InvalidaCredential)
         {
@@ -70,7 +80,8 @@ public class AuthenticaitonController : ApiController //ControllerBase
                 title: loginResult.FirstError.Description);
         }
         return loginResult.Match(
-            loginResult => Ok(MapResult(loginResult)),
+            // loginResult => Ok(MapResult(loginResult)),
+            loginResult => Ok(_mapper.Map<AuthenticationResponse>(loginResult)),
             errors => Problem(errors)
         );
         
