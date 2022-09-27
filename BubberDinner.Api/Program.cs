@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
         .AddInfrastructure(builder.Configuration)
         .AddPresentation();
 
-    
+
 }
 
 
@@ -27,10 +27,11 @@ var app = builder.Build();
     // app.UseMiddleware<ErrorHandler>(); // user errorhandler middleware
 
     app.UseExceptionHandler("/error"); // use built-iin error handler route
-    
+
     app.UseHttpsRedirection();
 
-    // app.UseAuthorization();
+    app.UseAuthentication();
+    app.UseAuthorization();
 
     app.MapControllers();
 

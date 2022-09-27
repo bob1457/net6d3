@@ -9,11 +9,13 @@ using BubbberDinner.Application.Services.Authenticaiton.Common;
 using BubbberDinner.Application.Services.Authenticaiton.Commands.Register;
 using BubbberDinner.Application.Services.Authenticaiton.Queries.Login;
 using MapsterMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BubberDinner.Api.Controllers;
 
 // [ApiController]
 [Route("auth")]
+[AllowAnonymous]
 public class AuthenticaitonController : ApiController //ControllerBase 
 {
     private readonly IMediator _mediatr;
@@ -39,14 +41,14 @@ public class AuthenticaitonController : ApiController //ControllerBase
         var command = _mapper.Map<RegisterCommand>(request);
         // new RegisterCommand(request.FirstName, request.LastName, request.Email, request.Password);
 
-        ErrorOr<AuthenticationResult> registerResult = await _mediatr.Send(command);       
-        
+        ErrorOr<AuthenticationResult> registerResult = await _mediatr.Send(command);
+
 
         return registerResult.Match(
             registerResult => Ok(_mapper.Map<AuthenticationResponse>(registerResult)),
             errors => Problem(errors)
         );
-        
+
         // AuthenticationResponse registerResponse = MapResult(registerResult);
 
         // return Ok(registerResponse);
@@ -73,7 +75,7 @@ public class AuthenticaitonController : ApiController //ControllerBase
 
         var loginResult = await _mediatr.Send(query);
 
-        if(loginResult.IsError && loginResult.FirstError == Domain.Common.Errors.Errors.Authenticaiton.InvalidaCredential)
+        if (loginResult.IsError && loginResult.FirstError == Domain.Common.Errors.Errors.Authenticaiton.InvalidaCredential)
         {
             return Problem(
                 statusCode: StatusCodes.Status401Unauthorized,
@@ -84,7 +86,7 @@ public class AuthenticaitonController : ApiController //ControllerBase
             loginResult => Ok(_mapper.Map<AuthenticationResponse>(loginResult)),
             errors => Problem(errors)
         );
-        
+
         // var loginResponse = new AuthenticationResponse(
         //     loginResult.user.Id,
         //     loginResult.user.FirstName,
@@ -92,9 +94,9 @@ public class AuthenticaitonController : ApiController //ControllerBase
         //     loginResult.user.Email,
         //     loginResult.Token);
 
-        
+
         // return Ok(loginResponse);
     }
 
-    
+
 }
