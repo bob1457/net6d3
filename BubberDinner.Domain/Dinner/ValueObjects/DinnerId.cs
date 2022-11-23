@@ -1,6 +1,6 @@
-using BubberDinner.Domain.Domain.Common.Models;
+using BubberDinner.Domain.Common.Models;
 
-namespace BubbberDinner.Domain.Bill.ValueObjects;
+namespace BubbberDinner.Domain.Dinner.ValueObjects;
 
 public sealed class DinnerId : ValueObject
 {

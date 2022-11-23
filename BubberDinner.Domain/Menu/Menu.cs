@@ -15,6 +15,9 @@ public sealed class Menu : AggregateRoot<MenuId>
 
     public HostId HostId { get; }
 
+    public DateTime CreationDateTime { get; }
+    public DateTime UpdateDateTime { get; }
+
     public IReadOnlyList<MenuSection> MenuSections => _menuSections.AsReadOnly();
 
     private Menu(
@@ -22,15 +25,15 @@ public sealed class Menu : AggregateRoot<MenuId>
         string name,
         string description,
         HostId hostId,
-        DateTime CreationDateTime,
-        DateTime UpdateDateTime
+        DateTime creationDateTime,
+        DateTime updateDateTime
     ) : base(menuId)
     {
         Name = name;
         Description = description;
         HostId = hostId;
-        CreationDateTime = CreationDateTime;
-        UpdateDateTime = UpdateDateTime;
+        CreationDateTime = creationDateTime;
+        UpdateDateTime = updateDateTime;
     }
 
     public static Menu Create(

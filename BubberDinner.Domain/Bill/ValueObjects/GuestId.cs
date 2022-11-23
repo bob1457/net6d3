@@ -1,4 +1,4 @@
-using BubberDinner.Domain.Domain.Common.Models;
+using BubberDinner.Domain.Common.Models;
 
 namespace BubbberDinner.Domain.Bill.ValueObjects;
 
