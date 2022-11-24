@@ -1,6 +1,6 @@
 using BubberDinner.Domain.Common.Models;
 
-namespace BubbberDinner.Domain.Bill.ValueObjects;
+namespace BubbberDinner.Domain.Guest.ValueObjects;
 
 public sealed class GuestId : ValueObject
 {

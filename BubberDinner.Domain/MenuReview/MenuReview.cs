@@ -1,6 +1,7 @@
 using BubbberDinner.Domain.Bill.ValueObjects;
 using BubbberDinner.Domain.Common.Models;
 using BubbberDinner.Domain.Dinner.ValueObjects;
+using BubbberDinner.Domain.Guest.ValueObjects;
 using BubbberDinner.Domain.Host.ValueObjects;
 using BubbberDinner.Domain.Menu.ValueObjects;
 using BubbberDinner.Domain.MenuReview.ValueObjects;

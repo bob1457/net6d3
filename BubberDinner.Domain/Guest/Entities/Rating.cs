@@ -1,57 +1,51 @@
-using BubbberDinner.Domain.Bill.ValueObjects;
 using BubbberDinner.Domain.Common.Models;
 using BubbberDinner.Domain.Dinner.ValueObjects;
 using BubbberDinner.Domain.Guest.ValueObjects;
 using BubbberDinner.Domain.Host.ValueObjects;
 
-namespace BubbberDinner.Domain.Bill;
+namespace BubbberDinner.Domain.Guest.Entities;
 
-public sealed class Bill : AggregateRoot<BillId>
+public sealed class Rating : Entity<RatingId>
 {
-    public Price Price { get; set; }
     public HostId HostId { get; set; }
-    public GuestId GuestId { get; set; }
     public DinnerId DinnerId { get; set; }
-
+    public float RatingValue { get; set; }
     public DateTime CreationDateTime { get; }
     public DateTime UpdateDateTime { get; }
 
-    private Bill(
-        BillId billId,
+    private Rating(
+        RatingId ratingId,
         HostId hostId,
-        GuestId guestId,
         DinnerId dinnerId,
-        Price price,
+        float ratingValue,
         DateTime creationDateTime,
         DateTime updateDateTime
-        ) : base(billId)
+
+    ) : base(ratingId)
     {
         HostId = hostId;
-        GuestId = guestId;
         DinnerId = dinnerId;
-        Price = price;
+        RatingValue = ratingValue;
         CreationDateTime = creationDateTime;
         UpdateDateTime = updateDateTime;
-
     }
 
-    public static Bill Create(
+    public static Rating Create(
         HostId hostId,
-        GuestId guestId,
         DinnerId dinnerId,
-        Price price
+        float ratingValue,
+        DateTime creationDateTime,
+        DateTime updateDateTime
     )
     {
         return new(
-            BillId.CreateUnique(),
+            RatingId.CreateUnique(),
             hostId,
-            guestId,
             dinnerId,
-            price,
+            ratingValue,
             DateTime.UtcNow,
             DateTime.UtcNow
         );
-
     }
-
 }
+
