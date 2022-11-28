@@ -1,0 +1,25 @@
+@host=https://localhost:7005
+@hostId=trwbet
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMzRhZmJkYS1kMGIzLTRlYTUtYjA4MC0yYjg1NzVjNzcwZGIiLCJqdGkiOiIxYTNjYmMxMi05Nzc3LTRmMGItOGE3Yy1lMmQwNzRlMGU1ZWUiLCJnaXZlbl9uYW1lIjoiQm9iIiwiZmFtaWx5X25hbWUiOiJZdWFuIiwiZXhwIjoxNjY5NjYzNDIyLCJpc3MiOiJCdWJiZXJEaW5uZXIiLCJhdWQiOiJCdWJiZXJEaW5uZXIifQ.jXVcJI6jw1_P9BQd8azZeTDVWFbVPqt7oTnvTLD455A
+
+POST {{host}}/hosts/{{hostId}}/menu HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "hostId": "111",
+    "name": "Yummy Menu",
+    "description": "New Year menu",
+    "sections": [
+        {
+            "name":"Appetizers",
+            "description": "Starters",
+            "items": [
+                {
+                    "name":"Deep fried wings",
+                    "description": "Deep fried chicken wings"
+                }
+            ]
+        }
+    ]
+}
