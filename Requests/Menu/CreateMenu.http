@@ -1,13 +1,13 @@
 @host=https://localhost:7005
-@hostId=00000000-0000-0000-0000-000000000000
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3Y2YyYTgzYy1jMGQ0LTQ1NTctOGZiNS1mZjYzZTM4ZGQ0NjciLCJqdGkiOiI1OTU0MGFiMi0yYjQxLTQ2ZjEtYmZmMi05ZjNjNzQ4MzNjNWQiLCJnaXZlbl9uYW1lIjoiQm9iIiwiZmFtaWx5X25hbWUiOiJZdWFuIiwiZXhwIjoxNjY5NzY1NzQ2LCJpc3MiOiJCdWJiZXJEaW5uZXIiLCJhdWQiOiJCdWJiZXJEaW5uZXIifQ.7B2lKk-nyWcPfVJ0IZPFVzAlNwIJCdxwxbempt0Z8wo
+@hostId=c0000000-0000-0000-0000-960000000326
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNzM2NzZhOS0wODRmLTRlNjctOWNlOS03NTdhZjAxMzZlNjAiLCJqdGkiOiI5OGVlYTJhNC1jZDAzLTQxOTEtOThlMi05ZGU3YzIyZGJkNjEiLCJnaXZlbl9uYW1lIjoiQm9iIiwiZmFtaWx5X25hbWUiOiJZdWFuIiwiZXhwIjoxNjY5ODM0MDI5LCJpc3MiOiJCdWJiZXJEaW5uZXIiLCJhdWQiOiJCdWJiZXJEaW5uZXIifQ.BviakCxLz1Zh8l-K07hDEC8_kYXWgW2tMg199UCUgyc
 
 POST {{host}}/hosts/{{hostId}}/menu HTTP/1.1
 content-type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "hostId": "111",
+    "hostId": "931b2368-0b49-4b6c-a7f2-e9c4c7e6c093",
     "name": "Yummy Menu",
     "description": "New Year menu",
     "sections": [

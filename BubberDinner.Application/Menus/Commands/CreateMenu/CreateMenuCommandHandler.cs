@@ -24,7 +24,7 @@ public class CreateMenuCommandHandler : IRequestHandler<CreateMenuCommand, Error
         // Create Menu        
         var menu = Menu.Create(
             // request.hostId,
-            HostId.CreateUnique(),
+            HostId.Create(request.HostId),
             request.Name,
             request.Description,
             request.Sections.ConvertAll(s =>
