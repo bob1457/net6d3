@@ -1,12 +1,15 @@
 namespace BubbberDinner.Infrastructure;
 
 using System.Text;
+
 using BubbberDinner.Application.Common.interfaces;
 using BubbberDinner.Application.Common.interfaces.Authenticaiton;
 using BubbberDinner.Application.Common.interfaces.Persistence;
+using BubbberDinner.Application.Common.Interfaces.Persistence;
 using BubbberDinner.Infrastructure.Authentication;
 using BubbberDinner.Infrastructure.Persistence;
 using BubbberDinner.Infrastructure.Service;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +25,7 @@ public static class DependencyInjection
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
         // services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IMenuRepository, MenuRepository>();
 
         return services;
     }

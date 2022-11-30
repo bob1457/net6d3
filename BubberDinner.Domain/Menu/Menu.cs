@@ -1,7 +1,10 @@
 using BubbberDinner.Domain.Common.Models;
 using BubbberDinner.Domain.Host.ValueObjects;
 using BubbberDinner.Domain.Menu.ValueObjects;
+
 using bubberDineer.Domain.Menu.Entities;
+
+using BubberDineer.Domain.Menu.Entities;
 
 namespace BubbberDinner.Domain.Menu;
 
@@ -37,9 +40,11 @@ public sealed class Menu : AggregateRoot<MenuId>
     }
 
     public static Menu Create(
+        HostId hostId,
         string name,
         string description,
-        HostId hostId)
+        List<MenuSection> menuSections
+        )
     {
         return new(
             MenuId.CreateUnique(),
@@ -51,4 +56,8 @@ public sealed class Menu : AggregateRoot<MenuId>
         );
     }
 
+    // public static object Create(Guid guid, string name, string description, List<MenuSection> menuSections)
+    // {
+    //     throw new NotImplementedException();
+    // }
 }

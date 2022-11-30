@@ -1,0 +1,4 @@
+namespace BubbberDinner.Contracts.Menus
+{
+
+}

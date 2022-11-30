@@ -12,6 +12,12 @@ public sealed class HostId : ValueObject
     }
 
     public static HostId CreateUnique() => new(Guid.NewGuid());
+    // public static HostId Create(string value)
+    // { 
+    //     return Guid.Parse(value);
+    // }
+
+    // Guid value = Guid.Parse("00000000");
 
     public override IEnumerable<object> GetEqualityComponents()
     {
